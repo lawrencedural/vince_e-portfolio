@@ -102,7 +102,7 @@ export function AboutPage() {
                 <div className="info-item-label">LinkedIn</div>
                 <div className="info-item-value">
                   <a href={portfolioConfig.social.linkedin} target="_blank" rel="noreferrer">
-                    Vince Umali
+                  https://www.linkedin.com/in/vince-anthony-umali
                   </a>
                 </div>
               </div>

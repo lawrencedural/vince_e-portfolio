@@ -9,36 +9,33 @@ type ProjectModalProps = {
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
   if (!project) return null;
 
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const hasImages = !!project.images && project.images.length > 0;
   const totalImages = hasImages ? project.images.length : 0;
 
-  const closeLightbox = () => setLightboxIndex(null);
   const showPrev = () => {
     if (!hasImages) return;
-    setLightboxIndex((idx) => {
-      const i = idx ?? 0;
-      return (i - 1 + totalImages) % totalImages;
-    });
+    setCurrentImageIndex((idx) => (idx - 1 + totalImages) % totalImages);
   };
+
   const showNext = () => {
     if (!hasImages) return;
-    setLightboxIndex((idx) => {
-      const i = idx ?? 0;
-      return (i + 1) % totalImages;
-    });
+    setCurrentImageIndex((idx) => (idx + 1) % totalImages);
   };
 
   useEffect(() => {
-    if (lightboxIndex === null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft') showPrev();
       if (e.key === 'ArrowRight') showNext();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [lightboxIndex]);
+  }, [currentImageIndex, totalImages]);
+
+  // Reset to first image when project changes
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [project?.id]);
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -60,178 +57,163 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         {project.images && project.images.length > 0 && (
           <>
             <h4 className="modal-subtitle">Project Images</h4>
-            <div className="project-modal-gallery">
-              {project.images.map((imagePath, index) => (
-                <div key={index} className="project-modal-image-wrapper">
-                  <img
-                    src={imagePath}
-                    alt={`${project.title} - Image ${index + 1}`}
-                    className="project-modal-image"
-                    style={{ cursor: 'zoom-in' }}
-                    onClick={() => setLightboxIndex(index)}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {project.evidence && project.evidence.length > 0 && (
-          <>
-            <h4 className="modal-subtitle">Evidence</h4>
-            <ul className="modal-links">
-              {project.evidence.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => {
-                      if (item.url.startsWith("#")) {
-                        e.preventDefault();
-                      }
-                    }}
-                  >
-                    {item.label}
-                    {item.url.startsWith("#") && " [PLACEHOLDER LINK]"}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-
-        <h4 className="modal-subtitle">Reflection</h4>
-        <p className="modal-body">{project.reflection}</p>
-
-        {lightboxIndex !== null && hasImages && (
-          <div
-            className="lightbox-backdrop"
-            onClick={closeLightbox}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              background: 'rgba(26,26,26,0.9)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 2000,
-              padding: '1rem'
-            }}
-          >
-            <button
-              className="lightbox-close"
-              aria-label="Close"
-              onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
-              style={{
-                position: 'absolute',
-                top: '16px',
-                right: '16px',
-                width: '40px',
-                height: '40px',
+            <div style={{ position: 'relative', width: '100%' }}>
+              {/* Main Image Display */}
+              <div style={{ 
+                position: 'relative',
+                width: '100%',
+                minHeight: '400px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#fff',
-                fontSize: '28px',
-                background: 'transparent',
-                border: '1px solid rgba(255,255,255,0.3)',
+                background: '#f5f5f5',
                 borderRadius: '8px',
-                cursor: 'pointer'
-              }}
-            >
-              ×
-            </button>
+                overflow: 'hidden'
+              }}>
+                <img
+                  src={project.images[currentImageIndex]}
+                  alt={`${project.title} - Image ${currentImageIndex + 1}`}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '500px',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    display: 'block'
+                  }}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = "none";
+                  }}
+                />
 
-            <button
-              className="lightbox-prev"
-              aria-label="Previous image"
-              onClick={(e) => { e.stopPropagation(); showPrev(); }}
-              style={{
-                position: 'absolute',
-                left: '16px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '48px',
-                height: '48px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'rgba(255,255,255,0.1)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                color: '#fff'
-              }}
-            >
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
+                {/* Previous Button */}
+                {totalImages > 1 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showPrev();
+                    }}
+                    style={{
+                      position: 'absolute',
+                      left: '16px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '40px',
+                      height: '40px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: 'rgba(255,255,255,0.9)',
+                      border: '1px solid rgba(0,0,0,0.1)',
+                      borderRadius: '50%',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                      transition: 'all 0.2s'
+                    }}
+                    aria-label="Previous image"
+                  >
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                  </button>
+                )}
 
-            <img
-              src={project.images[lightboxIndex]}
-              alt={`${project.title} - Image ${lightboxIndex + 1}`}
-              className="lightbox-image"
-              onClick={(e) => { e.stopPropagation(); showNext(); }}
-              style={{
-                maxWidth: '90vw',
-                maxHeight: '85vh',
-                objectFit: 'contain',
-                borderRadius: '12px',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
-                background: '#111'
-              }}
-            />
+                {/* Next Button */}
+                {totalImages > 1 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showNext();
+                    }}
+                    style={{
+                      position: 'absolute',
+                      right: '16px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '40px',
+                      height: '40px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: 'rgba(255,255,255,0.9)',
+                      border: '1px solid rgba(0,0,0,0.1)',
+                      borderRadius: '50%',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                      transition: 'all 0.2s'
+                    }}
+                    aria-label="Next image"
+                  >
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M9 6l6 6-6 6"/>
+                    </svg>
+                  </button>
+                )}
 
-            <button
-              className="lightbox-next"
-              aria-label="Next image"
-              onClick={(e) => { e.stopPropagation(); showNext(); }}
-              style={{
-                position: 'absolute',
-                right: '16px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '48px',
-                height: '48px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'rgba(255,255,255,0.1)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                color: '#fff'
-              }}
-            >
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 6l6 6-6 6"/></svg>
-            </button>
+                {/* Image Counter */}
+                {totalImages > 1 && (
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '16px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: 'rgba(0,0,0,0.7)',
+                    color: '#fff',
+                    padding: '6px 12px',
+                    borderRadius: '20px',
+                    fontSize: '0.875rem',
+                    fontWeight: '500'
+                  }}>
+                    {currentImageIndex + 1} / {totalImages}
+                  </div>
+                )}
+              </div>
 
-            <div
-              className="lightbox-counter"
-              style={{
-                position: 'absolute',
-                bottom: '16px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                color: '#fff',
-                fontSize: '0.875rem',
-                background: 'rgba(255,255,255,0.08)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '999px',
-                padding: '6px 10px'
-              }}
-            >
-              {lightboxIndex + 1} / {totalImages}
+              {/* Thumbnail Navigation */}
+              {totalImages > 1 && (
+                <div style={{
+                  display: 'flex',
+                  gap: '8px',
+                  marginTop: '16px',
+                  overflowX: 'auto',
+                  padding: '4px 0'
+                }}>
+                  {project.images.map((imagePath, index) => (
+                    <div
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      style={{
+                        minWidth: '80px',
+                        height: '60px',
+                        borderRadius: '6px',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        border: currentImageIndex === index ? '2px solid #2563eb' : '2px solid transparent',
+                        opacity: currentImageIndex === index ? 1 : 0.6,
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      <img
+                        src={imagePath}
+                        alt={`Thumbnail ${index + 1}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>
   );
 }
-
-

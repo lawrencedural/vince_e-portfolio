@@ -713,46 +713,197 @@ export function Portfolio() {
           </div>
         </section>
 
-        {/* Thank You / Appreciation Section */}
-        <section id="thankyou" className="section section-alt">
-          <div className="section-header">
-            <p className="section-eyebrow">Gratitude</p>
-            <h2 className="thankyou-title">Thank You</h2>
-            <p className="section-description">
-              A special thank you to all those who have supported my journey and
-              contributed to my growth and development.
-            </p>
-          </div>
-          <div className="thankyou-container">
-            <div className="thankyou-gallery">
-              {portfolioConfig.images.gallery.map((imagePath, index) => (
-                <div key={index} className="gallery-item">
-                  {portfolioConfig.usePlaceholders ? (
-                    <>
-                      <div className="gallery-image">
-                        <span>Photo {index + 1}</span>
-                      </div>
-                      <div className="gallery-overlay">
-                        <span>View Photo</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <img
-                        src={imagePath}
-                        alt={`Gallery photo ${index + 1}`}
-                        className="gallery-image"
-                      />
-                      <div className="gallery-overlay">
-                        <span>View Photo</span>
-                      </div>
-                    </>
-                  )}
+{/* Thank You / Appreciation Section */}
+<section id="thankyou" className="section section-alt" style={{ paddingTop: "70px" }}>
+  <div className="section-header">
+    <p className="section-eyebrow">Gratitude</p>
+    <h2 className="thankyou-title">Thank You</h2>
+    <p className="section-description">
+      A heartfelt appreciation to everyone who has been part of my journey—
+      mentors, classmates, and supporters who have shaped my growth and success.
+    </p>
+  </div>
+  
+  {/* Asymmetric Gallery Layout for 5 Images */}
+  <div className="thankyou-container">
+    <div 
+      className="thankyou-gallery"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '1rem',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '2rem 1rem'
+      }}
+    >
+      {portfolioConfig.images.gallery.slice(0, 5).map((imagePath, index) => {
+        // Define specific grid layouts for each image
+        const getGridStyle = (idx: number) => {
+          switch(idx) {
+            case 0: // Large feature image
+              return { gridColumn: 'span 2', gridRow: 'span 2', minHeight: '400px' };
+            case 1: // Wide horizontal
+              return { gridColumn: 'span 2', minHeight: '196px' };
+            case 2: // Small square
+              return { gridColumn: 'span 1', minHeight: '196px' };
+            case 3: // Small square
+              return { gridColumn: 'span 1', minHeight: '196px' };
+            case 4: // Wide horizontal bottom
+              return { gridColumn: 'span 2', minHeight: '250px' };
+            default:
+              return { gridColumn: 'span 1', minHeight: '250px' };
+          }
+        };
+
+        const isPlaceholder = portfolioConfig.usePlaceholders || !imagePath;
+
+        return (
+          <div 
+            key={index} 
+            className="gallery-item"
+            style={{ 
+              cursor: isPlaceholder ? 'default' : 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+              borderRadius: '8px',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+              ...getGridStyle(index)
+            }}
+          >
+            {isPlaceholder ? (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f0f0f0',
+                height: '100%',
+                width: '100%',
+                border: '2px dashed #d0d0d0'
+              }}>
+                <span style={{ color: '#999', fontSize: '0.875rem', fontWeight: '500' }}>
+                  Photo {index + 1}
+                </span>
+              </div>
+            ) : (
+              <>
+                <img
+                  src={imagePath}
+                  alt={`Gallery photo ${index + 1}`}
+                  className="gallery-image"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.5s ease',
+                  }}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.innerHTML = `
+                        <div style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          background: #f0f0f0;
+                          height: 100%;
+                          width: 100%;
+                          border: 2px dashed #d0d0d0;
+                        ">
+                          <span style="color: #999; font-size: 0.875rem; font-weight: 500;">
+                            Photo ${index + 1}
+                          </span>
+                        </div>
+                      `;
+                    }
+                  }}
+                />
+                <div 
+                  className="gallery-overlay" 
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'rgba(0,0,0,0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: 0,
+                    transition: 'opacity 0.3s ease',
+                  }}
+                >
+                  <span style={{ 
+                    color: '#fff', 
+                    fontSize: '0.875rem',
+                    fontWeight: '600',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px'
+                  }}>
+                    View Photo
+                  </span>
                 </div>
-              ))}
-            </div>
+              </>
+            )}
           </div>
-        </section>
+        );
+      })}
+    </div>
+  </div>
+
+  {/* Words of Appreciation Section */}
+  <div style={{
+    maxWidth: '900px',
+    margin: '4rem auto 2rem',
+    padding: '0 1rem'
+  }}>
+    <h3 style={{
+      fontSize: '2rem',
+      fontWeight: '700',
+      color: '#1a1a1a',
+      marginBottom: '2rem',
+      textAlign: 'center'
+    }}>
+      A Message of Gratitude
+    </h3>
+    
+    <div style={{ 
+      color: '#666',
+      lineHeight: '1.8',
+      fontSize: '1.05rem',
+      textAlign: 'left'
+    }}>
+      <p style={{ marginBottom: '1.5rem' }}>
+        I want to extend my sincere gratitude to everyone who has supported me throughout this journey.
+      </p>
+      
+      <p style={{ marginBottom: '1.5rem' }}>
+        To my <strong style={{ color: '#1a1a1a' }}>parents</strong>, thank you for your unwavering love, guidance, and for always believing in what I can achieve.
+      </p>
+      
+      <p style={{ marginBottom: '1.5rem' }}>
+        To my <strong style={{ color: '#1a1a1a' }}>friends</strong>, I'm grateful for your encouragement, shared moments, and for pushing me to keep striving.
+      </p>
+      
+      <p style={{ marginBottom: '1.5rem' }}>
+        To my <strong style={{ color: '#1a1a1a' }}>professors</strong>, your teachings and wisdom have played a huge role in shaping my growth and understanding.
+      </p>
+      
+      <p style={{ marginBottom: '1.5rem' }}>
+        And to my <strong style={{ color: '#1a1a1a' }}>Entrepreneurship classmates</strong>, thank you for the collaboration, ideas, and experiences that made this journey both meaningful and memorable.
+      </p>
+      
+      <p style={{ 
+        marginTop: '2rem',
+        fontStyle: 'italic',
+        color: '#2563eb',
+        fontSize: '1.1rem',
+        fontWeight: '500'
+      }}>
+        I truly appreciate every person who has helped me reach this point and inspired me to keep moving forward.
+      </p>
+    </div>
+  </div>
+</section>
 
         {/* Feedback Section */}
         <section id="feedback" className="section">
