@@ -16,7 +16,7 @@ export const portfolioConfig = {
     email: "vinceumali30@yahoo.com",
     phone: "09291270174",
     age: 23,
-    institution: "[Your Institution]",
+    institution: "De La Salle University - Manila",
   },
 
   // Social Links

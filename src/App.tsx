@@ -50,7 +50,7 @@ export function App() {
             © {new Date().getFullYear()} {portfolioConfig.personal.fullName} · E-Portfolio
           </p>
           <p className="footer-text" style={{ marginTop: "0.5rem" }}>
-            A powerful professional tool—beyond being an academic requirement.
+            A reflection of my growth in business communication and professional development.
           </p>
           <div className="footer-social">
             <a
