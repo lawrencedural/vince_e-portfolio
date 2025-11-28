@@ -7,20 +7,23 @@
 export const portfolioConfig = {
   // Personal Information
   personal: {
-    firstName: "Vince",
+    firstName: "Vince Anthony",
     lastName: "Umali",
-    fullName: "Vince Umali",
+    fullName: "Vince Anthony G Umali",
     role: "Student",
     title: "Business & Entrepreneurship",
-    location: "[Your Location]",
-    email: "your.email@example.com",
+    location: "104 Aguila Street, San Jose Village 1, Brgy Biñan, Biñan, Laguna",
+    email: "Vinceumali30@yahoo.com",
+    phone: "09291270174",
+    age: 23,
     institution: "[Your Institution]",
   },
 
   // Social Links
   social: {
-    linkedin: "https://linkedin.com/in/your-profile", // Update with your LinkedIn profile URL
-    email: "mailto:your.email@example.com",
+    linkedin: "https://www.linkedin.com/in/vince-anthony-umali/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+    facebook: "https://www.facebook.com/vagu.vagu.3",
+    email: "mailto:Vinceumali30@yahoo.com",
   },
 
   // Image Paths (images should be placed in public/images/)

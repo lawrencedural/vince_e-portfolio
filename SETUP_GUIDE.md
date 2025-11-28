@@ -54,7 +54,7 @@ personal: {
   fullName: "Vince Umali",
   role: "Student",
   title: "Business & Entrepreneurship",
-  location: "[Your Location]",
+  location: "104 Aguila Street, San Jose Village 1, Brgy Biñan, Biñan, Laguna",
   email: "your.email@example.com",
   institution: "[Your Institution]",
 }

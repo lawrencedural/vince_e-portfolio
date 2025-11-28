@@ -386,9 +386,75 @@ export function Portfolio() {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        {portfolioConfig.social.linkedin.replace("https://", "").replace("http://", "")}
+                        Vince Umali
                       </a>
                     </div>
+                  </div>
+                </div>
+                <div className="info-item">
+                  <div className="info-item-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M18 2h-3a4 4 0 0 0-4 4v3H7v4h4v9h4v-9h3l1-4h-4V6a1 1 0 0 1 1-1h3z" />
+                    </svg>
+                  </div>
+                  <div className="info-item-content">
+                    <div className="info-item-label">Facebook</div>
+                    <div className="info-item-value">
+                      <a
+                        href={portfolioConfig.social.facebook}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Vince Umali
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className="info-item">
+                  <div className="info-item-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M22 16.92V21a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3 5.18 2 2 0 0 1 5 3h4.09a2 2 0 0 1 2 1.72 12.66 12.66 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L10 11a16 16 0 0 0 6 6l1.36-1.36a2 2 0 0 1 2.11-.45 12.66 12.66 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                  </div>
+                  <div className="info-item-content">
+                    <div className="info-item-label">Contact No.</div>
+                    <div className="info-item-value">
+                      <a href={`tel:${portfolioConfig.personal.phone}`}>{portfolioConfig.personal.phone}</a>
+                    </div>
+                  </div>
+                </div>
+                <div className="info-item">
+                  <div className="info-item-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 6v6" />
+                      <path d="M12 18h.01" />
+                    </svg>
+                  </div>
+                  <div className="info-item-content">
+                    <div className="info-item-label">Age</div>
+                    <div className="info-item-value">{portfolioConfig.personal.age} years old</div>
                   </div>
                 </div>
               </div>
@@ -558,7 +624,7 @@ export function Portfolio() {
             <p className="section-eyebrow">Resources</p>
             <h2 className="section-title">Professional Documents</h2>
             <p className="section-description">
-              Downloadable professional documents including resume, CV, cover letter,
+              Downloadable professional documents including resume and cover letter,
               and other relevant materials for your review.
             </p>
           </div>
@@ -594,36 +660,7 @@ export function Portfolio() {
                   Download PDF
                 </a>
               </div>
-              <div className="document-card">
-                <div className="document-icon">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                    <polyline points="10 9 9 9 8 9" />
-                  </svg>
-                </div>
-                <h3 className="document-title">CV</h3>
-                <p className="document-description">
-                  A comprehensive curriculum vitae detailing my academic background,
-                  professional experience, and achievements.
-                </p>
-                <a
-                  href={portfolioConfig.documents.cv}
-                  download
-                  className="btn btn-primary"
-                >
-                  Download PDF
-                </a>
-              </div>
+             
               <div className="document-card">
                 <div className="document-icon">
                   <svg
@@ -646,13 +683,23 @@ export function Portfolio() {
                   A personalized letter highlighting my qualifications and
                   enthusiasm for potential opportunities.
                 </p>
-                <a
-                  href={portfolioConfig.documents.coverLetter}
-                  download
-                  className="btn btn-primary"
-                >
-                  Download PDF
-                </a>
+                <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
+                  <a
+                    href={portfolioConfig.documents.coverLetter}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-secondary"
+                  >
+                    View Cover Letter
+                  </a>
+                  <a
+                    href={portfolioConfig.documents.coverLetter}
+                    download
+                    className="btn btn-primary"
+                  >
+                    Download
+                  </a>
+                </div>
               </div>
             </div>
             <div style={{ marginTop: "2rem", textAlign: "center" }}>
@@ -706,6 +753,48 @@ export function Portfolio() {
             </div>
           </div>
         </section>
+
+        {/* Feedback Section */}
+        <section id="feedback" className="section">
+          <div className="section-header">
+            <p className="section-eyebrow">Insights</p>
+            <h2 className="section-title">Feedback & Growth</h2>
+            <p className="section-description">
+              A reflective summary of improvements in communication, applied feedback, and how each task contributed to understanding business and entrepreneurship.
+            </p>
+          </div>
+          <div className="feedback-container">
+            <div className="feedback-grid">
+              <article className="feedback-card">
+                <div className="feedback-card-icon">📈</div>
+                <h3>How my written and oral communication skills have improved</h3>
+                <div className="feedback-body">
+                  <p>Throughout the term, I initially struggled to engage in small interactions with my classmates because I was too shy to approach them. As the weeks went by, each activity challenged me to communicate more whether through oral speeches or group discussions. At first, I found it difficult to express my thoughts clearly during group work.</p>
+                  <p className="mt-md">However, when we began practicing public speaking such as the exercise where we had to stand on stage for one minute with no verbal communication, relying only on eye contact and proper posture I slowly started to overcome my fear. The following week, I was chosen to deliver an impromptu speech, which was another challenge for me, but it pushed me to improve even more.</p>
+                  <p className="mt-md">Towards the end of the term, I realized how much progress I had made in communicating with my group. I even found myself talking to them as comfortably as I would with a close friend. After the presentation by our guest speaker about introverted individuals, I felt inspired and gained the confidence to interact more openly with my classmates.</p>
+                  <p className="mt-md">All these activities and experiences were meaningful and truly helped me express myself more naturally instead of feeling overwhelmed by nervousness. <strong>In the end, this term became a turning point for my confidence, communication skills, and personal growth.</strong></p>
+                </div>
+              </article>
+
+              <article className="feedback-card">
+                <div className="feedback-card-icon">💡</div>
+                <h3>What feedback I received and how I applied it</h3>
+                <div className="feedback-body">
+                  <p><strong>Feedbacks:</strong> at first lack of confidence, having a hardtime expressing my thoughts and feelings.</p>
+                  <p className="mt-md"><strong>Solution and how I applied it:</strong> to be myself and express my thoughts in the way that feels natural to me. I was no longer afraid of making mistakes. During the final activities of the term, I felt more confident and comfortable, which led to much better outcomes.</p>
+                </div>
+              </article>
+
+              <article className="feedback-card">
+                <div className="feedback-card-icon">🎯</div>
+                <h3>How each task contributed to my understanding of business and entrepreneurship</h3>
+                <div className="feedback-body">
+                  <p>Every task in this communication course plays an important role, as each one helps strengthen our abilities and improve our weaknesses through experience. In the business field, communication with different parties is both common and formal. As a young entrepreneur, mastering proper communication is one of the first steps toward becoming successful in our journey as business professionals.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="footer">
@@ -724,6 +813,14 @@ export function Portfolio() {
               rel="noreferrer"
             >
               LinkedIn
+            </a>
+            <a
+              href={portfolioConfig.social.facebook}
+              className="social-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Facebook
             </a>
             <a href={portfolioConfig.social.email} className="social-link">
               Email
