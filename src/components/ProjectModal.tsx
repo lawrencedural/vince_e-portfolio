@@ -87,7 +87,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </>
         )}
 
-        {project.images && project.images.length > 0 && (
+        {project.id !== "sell-yourself" && project.images && project.images.length > 0 && (
           <>
             <h4 className="modal-subtitle">Project Images</h4>
             <div style={{ position: 'relative', width: '100%' }}>
