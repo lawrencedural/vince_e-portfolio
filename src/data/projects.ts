@@ -10,11 +10,27 @@ export type Project = {
   course: string;
   summary: string;
   images: string[]; // Array of image paths
+  video?: string; // Optional video URL
   evidence: EvidenceLink[];
   reflection: string;
 };
 
 export const projects: Project[] = [
+  {
+    id: "sell-yourself",
+    lesson: "Project",
+    title: "Sell Yourself",
+    course: "Business and Entrepreneurship",
+    summary:
+      "A personal video presentation showcasing my professional introduction, key strengths, and communication skills. This video demonstrates my ability to present myself confidently and articulate my value proposition.",
+    images: [],
+    video: "", // PASTE YOUR VIDEO URL HERE (YouTube, Vimeo, or direct video link)
+    evidence: [
+      { label: "Video Presentation", url: "#placeholder-sell-yourself-video" },
+    ],
+    reflection:
+      "Creating this 'Sell Yourself' video was a powerful exercise in self-presentation and communication. It challenged me to articulate my strengths, achievements, and professional goals in a clear and compelling way. The process of recording and reviewing my presentation helped me identify areas for improvement in my delivery, tone, and body language. This video represents my growth in confidence and my ability to communicate my value effectively.",
+  },
   {
     id: "case-study",
     lesson: "Project",
