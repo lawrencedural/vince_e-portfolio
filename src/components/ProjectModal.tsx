@@ -54,7 +54,40 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         </h3>
         <p className="modal-body">{project.summary}</p>
 
-        {project.images && project.images.length > 0 && (
+        {/* Video Section */}
+        {project.video && (
+          <>
+            <h4 className="modal-subtitle">Video Presentation</h4>
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              paddingBottom: '56.25%', // 16:9 aspect ratio
+              height: 0,
+              overflow: 'hidden',
+              borderRadius: '8px',
+              marginBottom: '2rem',
+              background: '#000'
+            }}>
+              <iframe
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                  borderRadius: '8px'
+                }}
+                src={project.video}
+                title={`${project.title} Video`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </>
+        )}
+
+        {project.id !== "sell-yourself" && project.images && project.images.length > 0 && (
           <>
             <h4 className="modal-subtitle">Project Images</h4>
             <div style={{ position: 'relative', width: '100%' }}>
