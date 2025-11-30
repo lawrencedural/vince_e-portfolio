@@ -5,12 +5,13 @@ import { AboutPage } from "./pages/AboutPage";
 import { ProjectsPage } from "./pages/ProjectsPage";
 import { AchievementsPage } from "./pages/AchievementsPage";
 import { ReflectionsPage } from "./pages/ReflectionsPage";
+import { HobbiesPage } from "./pages/HobbiesPage";
 import { DocumentsPage } from "./pages/DocumentsPage";
 import { FeedbackPage } from "./pages/FeedbackPage";
 import { ThankYouPage } from "./pages/ThankYouPage";
 import { portfolioConfig } from "./data/config";
 
-export type PageType = "home" | "about" | "projects" | "achievements" | "reflections" | "documents" | "feedback" | "thankyou";
+export type PageType = "home" | "about" | "projects" | "achievements" | "reflections" | "hobbies" | "documents" | "feedback" | "thankyou";
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<PageType>("home");
@@ -22,6 +23,7 @@ export function App() {
     "projects",
     "achievements",
     "reflections",
+    "hobbies",
     "documents",
     "feedback",
     "thankyou",
@@ -103,6 +105,8 @@ export function App() {
         return <AchievementsPage />;
       case "reflections":
         return <ReflectionsPage />;
+      case "hobbies":
+        return <HobbiesPage />;
       case "documents":
         return <DocumentsPage />;
       case "feedback":

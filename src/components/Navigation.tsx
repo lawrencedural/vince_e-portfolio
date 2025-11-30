@@ -41,6 +41,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     { label: "Projects", page: "projects" },
     { label: "Achievements", page: "achievements" },
     { label: "Reflections", page: "reflections" },
+    { label: "Hobbies", page: "hobbies" },
     { label: "Documents", page: "documents" },
     { label: "Feedback", page: "feedback" },
     { label: "Thank You", page: "thankyou" },
